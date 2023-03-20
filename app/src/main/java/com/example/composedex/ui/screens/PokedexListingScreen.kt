@@ -13,15 +13,14 @@ import com.example.composedex.ui.elements.PokemonCard
 @Composable
 fun PokedexListingScreen(){
 
-    //Maybe a header
-
     LazyColumn(
-        modifier = Modifier.padding(top= 40.dp),
+        modifier = Modifier.padding(top= 0.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         items(5){
+            Spacer(modifier = Modifier.height(5.dp))
             PokemonCard()
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(35.dp))
         }
     }
 }
