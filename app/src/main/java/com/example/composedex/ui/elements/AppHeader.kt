@@ -34,7 +34,7 @@ fun PokedexAppHeader(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.poke_ball),
             contentDescription = null,
             modifier = Modifier
-                .size(96.dp)
+                .size(82.dp)
                 .padding(8.dp)
         )
         Text(
