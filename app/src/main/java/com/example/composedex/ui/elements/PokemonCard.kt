@@ -20,8 +20,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.composedex.R
+import com.example.composedex.model.GenericType
 import com.example.composedex.model.Pokemon
+import com.example.composedex.model.PokemonType
 import com.example.composedex.ui.theme.ComposeDexTheme
+import com.example.composedex.utils.assembleImageUrl
+import com.example.composedex.utils.formatNumber
 import java.util.*
 
 @Composable
@@ -49,11 +53,7 @@ fun PokemonCard(
                     .background(Color.Gray)
                     .weight(5f),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(
-                        "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${
-                            pokemon.id.toString().padStart(3, '0')
-                        }.png"
-                    )
+                    .data(assembleImageUrl(pokemon.id))
                     .crossfade(500)
                     .build(),
                 contentDescription = null,
@@ -61,9 +61,10 @@ fun PokemonCard(
                 placeholder = painterResource(id = R.drawable.poke_ball)
             )
             Text(
-                text = "N°${pokemon.id.toString().padStart(3, '0')}",
+                text = "N°${formatNumber(pokemon.id)}",
                 modifier = Modifier
-                    .padding(8.dp)
+                    .paddingFromBaseline(12.dp)
+                    .padding(horizontal = 16.dp)
                     .weight(0.5f),
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.onSecondary
@@ -74,15 +75,16 @@ fun PokemonCard(
                     else it.toString()
                 },
                 modifier = Modifier
-                    .padding(16.dp)
-                    .weight(1f),
+                    .paddingFromBaseline(16.dp)
+                    .padding(horizontal = 16.dp)
+                    .weight(0.75f),
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onSecondary
             )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.5f),
+                    .weight(0.75f),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 for (type in pokemon.types) {
@@ -114,7 +116,8 @@ fun PokemonCard(
 @Preview(showBackground = true)
 @Composable
 fun LightPokeCardPreview() {
-    val pokemon = Pokemon(1, "Squirtle", listOf())
+    val type = PokemonType(1, GenericType("water"))
+    val pokemon = Pokemon(1, "Squirtle", listOf(type))
     ComposeDexTheme {
         PokemonCard(
             pokemon = pokemon
@@ -128,7 +131,8 @@ fun LightPokeCardPreview() {
 )
 @Composable
 fun DarkPokeCardPreview() {
-    val pokemon = Pokemon(1, "Squirtle", listOf())
+    val type = PokemonType(1, GenericType("water"))
+    val pokemon = Pokemon(1, "Squirtle", listOf(type))
     ComposeDexTheme {
         PokemonCard(pokemon = pokemon)
     }
