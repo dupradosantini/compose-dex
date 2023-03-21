@@ -15,7 +15,7 @@ fun PokedexApp(){
     HomeScreen(
         pokedexUiState = pokedexViewModel.pokedexUiState,
         getMorePokemons = { pokedexViewModel.getPokemons() },
-        retryAction = { /*TODO*/ }
+        retryAction = { pokedexViewModel.getFromStart() }
     )
 
 }

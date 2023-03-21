@@ -46,6 +46,19 @@ class PokedexViewModel(
         }
     }
 
+    fun getFromStart(){
+        viewModelScope.launch {
+            pokedexUiState = try {
+                val listResult = pokemonRepository.getFromStart()
+                PokedexUiState.Success(entries = listResult)
+            } catch (e: IOException){
+                PokedexUiState.Error
+            } catch (e: HttpException){
+                PokedexUiState.Error
+            }
+        }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

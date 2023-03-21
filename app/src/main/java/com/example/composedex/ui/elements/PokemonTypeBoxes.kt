@@ -304,7 +304,7 @@ fun DragonTypeBox(){
         contentAlignment = Alignment.Center
     ){
         Text(
-            text = "Flying",
+            text = "Dragon",
             color = Color.White
         )
     }

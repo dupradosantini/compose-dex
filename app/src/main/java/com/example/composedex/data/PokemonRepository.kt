@@ -5,6 +5,7 @@ import com.example.composedex.network.PokemonApiService
 
 interface PokemonRepository {
     suspend fun getPokemon(): List<Pokemon>
+    suspend fun getFromStart(): List<Pokemon>
 }
 
 class NetworkPokemonRepository(
@@ -25,5 +26,11 @@ class NetworkPokemonRepository(
             pokemonList.add(pokemonApiService.getPokemon(pokeNumber))
         }
         return pokemonList.sortedBy { pokemon: Pokemon -> pokemon.id }
+    }
+
+    override suspend fun getFromStart(): List<Pokemon> {
+        quantity = 1
+        pokemonList.removeAll(pokemonList)
+        return getPokemon()
     }
 }
