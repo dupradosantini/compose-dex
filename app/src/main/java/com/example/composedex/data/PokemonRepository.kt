@@ -3,18 +3,27 @@ package com.example.composedex.data
 import com.example.composedex.model.Pokemon
 import com.example.composedex.network.PokemonApiService
 
-interface PokemonRepository{
-    suspend fun getPokemon(quantity:Int = 151): List<Pokemon>
+interface PokemonRepository {
+    suspend fun getPokemon(): List<Pokemon>
 }
 
 class NetworkPokemonRepository(
     private val pokemonApiService: PokemonApiService
-): PokemonRepository {
-    override suspend fun getPokemon(quantity: Int): List<Pokemon> {
-        val pokemonList = mutableListOf<Pokemon>()
-        for(pokeNumber in 1..quantity){
+) : PokemonRepository {
+    private var quantity = 1
+    private val pokemonList = mutableListOf<Pokemon>()
+    override suspend fun getPokemon(): List<Pokemon> {
+
+        val lastQuantity = quantity
+        quantity = lastQuantity + 5
+
+        if (quantity > 152) { // the max number of pokes + 1
+            quantity = 152
+        }
+
+        for (pokeNumber in lastQuantity until quantity) {
             pokemonList.add(pokemonApiService.getPokemon(pokeNumber))
         }
-        return pokemonList
+        return pokemonList.sortedBy { pokemon: Pokemon -> pokemon.id }
     }
 }

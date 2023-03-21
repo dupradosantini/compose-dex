@@ -35,9 +35,8 @@ class PokedexViewModel(
 
     fun getPokemons(){
         viewModelScope.launch {
-            pokedexUiState = PokedexUiState.Loading
             pokedexUiState = try {
-                val listResult = pokemonRepository.getPokemon(151)
+                val listResult = pokemonRepository.getPokemon()
                 PokedexUiState.Success(entries = listResult)
             } catch (e: IOException){
                 PokedexUiState.Error
